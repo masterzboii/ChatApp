@@ -77,7 +77,7 @@ socket.on('chat message', (data) => {
     if (Notification.permission === "granted") {
         new Notification(`${data.username}`, {
             body: data.message,
-            icon: 'pfp.png'
+            icon: 'pfp.png' // Use pfp.png as notification icon
         });
     }
 
