@@ -49,15 +49,7 @@ const sanitize = (str) => {
   return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 
-const authMiddleware = (req, res, next) => {
-  if (req.session.loggedIn) {
-    return next();
-  } else {
-    res.sendFile(__dirname + '/public/password.html');
-  }
-};
-
-app.get('/', authMiddleware, (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
@@ -65,9 +57,9 @@ app.post('/login', (req, res) => {
   const { password } = req.body;
   if (password === PASSWORD) {
     req.session.loggedIn = true;
-    res.redirect('/');
+    res.sendStatus(200);
   } else {
-    res.sendFile(__dirname + '/public/password.html');
+    res.sendStatus(401);
   }
 });
 
