@@ -1,36 +1,62 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #ff0099, #493240);
+    color: #fff;
 }
 
 #chat-container {
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 #messages {
     height: 300px;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     padding: 10px;
     margin-bottom: 10px;
+    background: #1a1a1a;
+    border-radius: 5px;
 }
 
-#message-input {
-    width: calc(100% - 60px);
+#username,
+#message-input,
+#file-input {
+    width: calc(100% - 20px);
     padding: 10px;
-    margin-right: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
 }
 
-#send-button {
+#send-button,
+#upload-button {
     padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #ff0099;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#send-button:hover,
+#upload-button:hover {
+    background: #e60082;
+}
+
+#send-button:active,
+#upload-button:active {
+    background: #cc0066;
 }
