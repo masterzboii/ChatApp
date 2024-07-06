@@ -1,5 +1,18 @@
 const socket = io();
 
+// Initialize the emoji picker
+const picker = new EmojiButton();
+const button = document.querySelector('#emoji-button');
+const input = document.querySelector('#message-input');
+
+button.addEventListener('click', () => {
+    picker.togglePicker(button);
+});
+
+picker.on('emoji', emoji => {
+    input.value += emoji;
+});
+
 document.getElementById('send-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const messageInput = document.getElementById('message-input');

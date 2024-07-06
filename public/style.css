@@ -11,19 +11,19 @@ body {
 
 #chat-container {
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     background: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 #messages {
-    height: 300px;
+    height: 400px;
     overflow-y: auto;
     border: 1px solid #333;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
     background: #1a1a1a;
     border-radius: 5px;
 }
@@ -31,24 +31,26 @@ body {
 #username,
 #message-input,
 #file-input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
+    width: calc(100% - 30px);
+    padding: 15px;
+    margin-bottom: 15px;
     border: none;
     border-radius: 5px;
     background: #333;
     color: #fff;
+    font-size: 16px;
 }
 
 #send-button,
 #upload-button {
-    padding: 10px 20px;
+    padding: 15px 30px;
     border: none;
     border-radius: 5px;
     background: #ff0099;
     color: #fff;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-size: 16px;
 }
 
 #send-button:hover,
