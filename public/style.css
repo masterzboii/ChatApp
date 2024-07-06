@@ -73,7 +73,7 @@ body {
 }
 
 #username,
-#avatar-input,
+#message-input,
 #file-input {
     width: calc(100% - 30px);
     padding: 15px;
@@ -86,8 +86,7 @@ body {
 }
 
 #send-button,
-#upload-button,
-#emoji-button {
+#upload-button {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
@@ -96,10 +95,6 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
     font-size: 16px;
-}
-
-#emoji-button {
-    margin-bottom: 15px;
 }
 
 #upload-button {
@@ -113,14 +108,12 @@ body {
 }
 
 #send-button:hover,
-#upload-button:hover,
-#emoji-button:hover {
+#upload-button:hover {
     background: #e60082;
 }
 
 #send-button:active,
-#upload-button:active,
-#emoji-button:active {
+#upload-button:active {
     background: #cc0066;
 }
 

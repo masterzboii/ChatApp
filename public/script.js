@@ -22,11 +22,11 @@ document.getElementById('login-button').addEventListener('click', () => {
 
 document.getElementById('send-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
-    const messageInput = quill.root.innerHTML;
+    const messageInput = document.getElementById('message-input').value;
     const avatarInput = document.getElementById('avatar-input');
     const avatar = avatarInput.files[0] ? URL.createObjectURL(avatarInput.files[0]) : null;
     socket.emit('chat message', { username, message: messageInput, avatar });
-    quill.root.innerHTML = '';
+    document.getElementById('message-input').value = '';
 });
 
 document.getElementById('upload-button').addEventListener('click', () => {
@@ -45,20 +45,6 @@ document.getElementById('file-input').addEventListener('change', () => {
         };
         reader.readAsDataURL(file);
     }
-});
-
-const quill = new Quill('#message-input', {
-    theme: 'snow'
-});
-
-const picker = new EmojiMart.Picker({
-    onSelect: emoji => {
-        quill.insertText(quill.getSelection().index, emoji.native);
-    }
-});
-
-document.getElementById('emoji-button').addEventListener('click', () => {
-    document.getElementById('emoji-container').appendChild(picker);
 });
 
 socket.on('load messages', (messages) => {
