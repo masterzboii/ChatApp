@@ -55,6 +55,7 @@ socket.on('load messages', (messages) => {
         const messageElement = document.createElement('div');
         messageElement.id = `message-${data.id}`;
         messageElement.innerHTML = `
+            <img src="pfp.png" alt="avatar" class="avatar">
             <strong>${data.username}</strong>: ${data.message}
             <span class="message-timestamp">${data.timestamp}</span>
         `;
@@ -67,6 +68,7 @@ socket.on('chat message', (data) => {
     const messageElement = document.createElement('div');
     messageElement.id = `message-${data.id}`;
     messageElement.innerHTML = `
+        <img src="pfp.png" alt="avatar" class="avatar">
         <strong>${data.username}</strong>: ${data.message}
         <span class="message-timestamp">${data.timestamp}</span>
     `;
@@ -75,7 +77,7 @@ socket.on('chat message', (data) => {
     if (Notification.permission === "granted") {
         new Notification(`${data.username}`, {
             body: data.message,
-            icon: 'favicon.ico' // Use favicon as notification icon
+            icon: 'pfp.png' // Use pfp.png as notification icon
         });
     }
 
@@ -93,6 +95,7 @@ socket.on('file upload', (data) => {
     const messages = document.getElementById('messages');
     const fileElement = document.createElement('div');
     fileElement.innerHTML = `
+        <img src="pfp.png" alt="avatar" class="avatar">
         <strong>${data.username}</strong> uploaded a file:
         <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>
     `;
