@@ -13,10 +13,12 @@
   "dependencies": {
     "basic-auth": "^2.0.1",
     "body-parser": "^1.20.2",
+    "connect-mongo": "^5.1.0",
     "express": "^4.19.2",
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.18.0",
     "helmet": "^6.0.0",
+    "mongoose": "^8.4.5",
     "socket.io": "^4.7.5"
   }
 }
