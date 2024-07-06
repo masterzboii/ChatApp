@@ -4,7 +4,6 @@ const socketIo = require('socket.io');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
-const basicAuth = require('basic-auth');
 
 const app = express();
 const server = http.createServer(app);
@@ -37,17 +36,18 @@ const sanitize = (str) => {
     return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 
-const auth = (req, res, next) => {
-    const user = basicAuth(req);
-    if (user && user.pass === PASSWORD) {
-        return next();
-    } else {
-        res.set('WWW-Authenticate', 'Basic realm="example"');
-        return res.status(401).send();
-    }
-};
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/password.html');
+});
 
-app.use(auth);
+app.post('/login', (req, res) => {
+    const { password } = req.body;
+    if (password === PASSWORD) {
+        res.sendFile(__dirname + '/public/index.html');
+    } else {
+        res.sendFile(__dirname + '/public/password.html');
+    }
+});
 
 const addMessage = (message) => {
     messages.push(message);
