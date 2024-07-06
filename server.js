@@ -9,6 +9,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const messages = [];
 const users = new Set();
 
 app.use(helmet());
@@ -33,6 +34,17 @@ const sanitize = (str) => {
     return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 };
 
+const addMessage = (message) => {
+    messages.push(message);
+    setTimeout(() => {
+        const index = messages.indexOf(message);
+        if (index > -1) {
+            messages.splice(index, 1);
+            io.emit('delete message', message.id);
+        }
+    }, 5 * 60 * 1000); // 5 minutes
+};
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
@@ -44,9 +56,12 @@ io.on('connection', (socket) => {
         socket.username = data.username;
         users.add(socket.username);
         io.emit('user list', Array.from(users));
+        socket.emit('load messages', messages);
     });
     socket.on('chat message', (data) => {
-        io.emit('chat message', { username: data.username, message: sanitize(data.message), timestamp: new Date().toLocaleTimeString() });
+        const message = { ...data, id: Date.now(), timestamp: new Date().toLocaleTimeString() };
+        addMessage(message);
+        io.emit('chat message', message);
     });
     socket.on('file upload', (data) => {
         io.emit('file upload', data);

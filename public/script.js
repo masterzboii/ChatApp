@@ -26,11 +26,30 @@ document.getElementById('file-input').addEventListener('change', () => {
     }
 });
 
+socket.on('load messages', (messages) => {
+    const messageContainer = document.getElementById('messages');
+    messageContainer.innerHTML = '';
+    messages.forEach((data) => {
+        const messageElement = document.createElement('div');
+        messageElement.id = `message-${data.id}`;
+        messageElement.innerHTML = `<strong>${data.username}</strong>: ${data.message} <span class="message-timestamp">${data.timestamp}</span>`;
+        messageContainer.appendChild(messageElement);
+    });
+});
+
 socket.on('chat message', (data) => {
     const messages = document.getElementById('messages');
     const messageElement = document.createElement('div');
+    messageElement.id = `message-${data.id}`;
     messageElement.innerHTML = `<strong>${data.username}</strong>: ${data.message} <span class="message-timestamp">${data.timestamp}</span>`;
     messages.appendChild(messageElement);
+});
+
+socket.on('delete message', (messageId) => {
+    const messageElement = document.getElementById(`message-${messageId}`);
+    if (messageElement) {
+        messageElement.remove();
+    }
 });
 
 socket.on('file upload', (data) => {
