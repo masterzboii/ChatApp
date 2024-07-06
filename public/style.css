@@ -1,6 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -8,6 +9,21 @@ body {
     background: linear-gradient(135deg, #ff0099, #493240);
     color: #fff;
     position: relative;
+}
+
+.navbar {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #secured-by {
@@ -25,9 +41,10 @@ body {
 
 #secured-by i {
     margin-right: 5px;
-    color: #00ff00; /* Security checkmark color */
+    color: #00ff00;
 }
 
+#login-container,
 #chat-container {
     width: 100%;
     max-width: 600px;
@@ -56,7 +73,7 @@ body {
 }
 
 #username,
-#message-input,
+#avatar-input,
 #file-input {
     width: calc(100% - 30px);
     padding: 15px;
@@ -69,7 +86,8 @@ body {
 }
 
 #send-button,
-#upload-button {
+#upload-button,
+#emoji-button {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
@@ -78,6 +96,10 @@ body {
     cursor: pointer;
     transition: background 0.3s ease;
     font-size: 16px;
+}
+
+#emoji-button {
+    margin-bottom: 15px;
 }
 
 #upload-button {
@@ -91,12 +113,14 @@ body {
 }
 
 #send-button:hover,
-#upload-button:hover {
+#upload-button:hover,
+#emoji-button:hover {
     background: #e60082;
 }
 
 #send-button:active,
-#upload-button:active {
+#upload-button:active,
+#emoji-button:active {
     background: #cc0066;
 }
 
@@ -104,4 +128,13 @@ body {
     font-size: 0.8em;
     color: #ccc;
     display: block;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
 }

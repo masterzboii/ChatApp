@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 const messages = [];
-const users = new Set();
+const users = new Map();
 
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         users.delete(socket.username);
-        io.emit('user list', Array.from(users));
+        io.emit('user list', Array.from(users.keys()));
         console.log('user disconnected');
     });
 
@@ -60,20 +60,28 @@ io.on('connection', (socket) => {
             socket.disconnect();
         } else {
             socket.username = data.username;
-            users.add(socket.username);
-            io.emit('user list', Array.from(users));
+            users.set(socket.username, { avatar: data.avatar });
+            io.emit('user list', Array.from(users.keys()));
             socket.emit('load messages', messages);
         }
     });
 
     socket.on('chat message', (data) => {
-        const message = { ...data, id: Date.now(), timestamp: new Date().toLocaleTimeString() };
+        const message = { 
+            ...data, 
+            id: Date.now(), 
+            timestamp: new Date().toLocaleTimeString(),
+            avatar: users.get(data.username).avatar
+        };
         addMessage(message);
         io.emit('chat message', message);
     });
 
     socket.on('file upload', (data) => {
-        io.emit('file upload', data);
+        io.emit('file upload', { 
+            ...data, 
+            avatar: users.get(data.username).avatar 
+        });
     });
 });
 
