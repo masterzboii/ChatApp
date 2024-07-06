@@ -9,34 +9,14 @@ const notificationSound = new Audio('notification.mp3');
 
 document.getElementById('login-button').addEventListener('click', () => {
     const passwordInput = document.getElementById('password-input').value;
-    if (passwordInput === "UqVhF6pP{[o,EP2Me2[4SZ{+a=meu!^[;iKaDH=~~TPtsvOiW(") {
-        document.getElementById('login-container').style.display = 'none';
-        document.getElementById('chat-container').style.display = 'block';
-        const username = prompt("Enter your username");
-        document.getElementById('username').value = username;
-        socket.emit('new user', { username, password: passwordInput });
-    } else {
-        alert('Incorrect password');
-    }
+    const username = prompt("Enter your username");
+    socket.emit('login', { username, password: passwordInput });
 });
 
 document.getElementById('send-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const messageInput = document.getElementById('message-input').value;
-    const avatarInput = document.getElementById('avatar-input');
-    
-    // Process avatar image if uploaded
-    if (avatarInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const avatar = reader.result;
-            socket.emit('chat message', { username, message: messageInput, avatar });
-        };
-        reader.readAsDataURL(avatarInput.files[0]);
-    } else {
-        socket.emit('chat message', { username, message: messageInput, avatar: null });
-    }
-    
+    socket.emit('chat message', { username, message: messageInput });
     document.getElementById('message-input').value = '';
 });
 
@@ -58,6 +38,16 @@ document.getElementById('file-input').addEventListener('change', () => {
     }
 });
 
+socket.on('login success', (username) => {
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('chat-container').style.display = 'block';
+    document.getElementById('username').value = username;
+});
+
+socket.on('login failure', () => {
+    alert('Incorrect password');
+});
+
 socket.on('load messages', (messages) => {
     const messageContainer = document.getElementById('messages');
     messageContainer.innerHTML = '';
@@ -65,7 +55,7 @@ socket.on('load messages', (messages) => {
         const messageElement = document.createElement('div');
         messageElement.id = `message-${data.id}`;
         messageElement.innerHTML = `
-            <img src="${data.avatar || 'default-avatar.png'}" alt="avatar" class="avatar">
+            <img src="pfp.png" alt="avatar" class="avatar">
             <strong>${data.username}</strong>: ${data.message}
             <span class="message-timestamp">${data.timestamp}</span>
         `;
@@ -78,7 +68,7 @@ socket.on('chat message', (data) => {
     const messageElement = document.createElement('div');
     messageElement.id = `message-${data.id}`;
     messageElement.innerHTML = `
-        <img src="${data.avatar || 'default-avatar.png'}" alt="avatar" class="avatar">
+        <img src="pfp.png" alt="avatar" class="avatar">
         <strong>${data.username}</strong>: ${data.message}
         <span class="message-timestamp">${data.timestamp}</span>
     `;
@@ -87,7 +77,7 @@ socket.on('chat message', (data) => {
     if (Notification.permission === "granted") {
         new Notification(`${data.username}`, {
             body: data.message,
-            icon: data.avatar || 'default-avatar.png'
+            icon: 'pfp.png'
         });
     }
 
@@ -105,7 +95,7 @@ socket.on('file upload', (data) => {
     const messages = document.getElementById('messages');
     const fileElement = document.createElement('div');
     fileElement.innerHTML = `
-        <img src="${data.avatar || 'default-avatar.png'}" alt="avatar" class="avatar">
+        <img src="pfp.png" alt="avatar" class="avatar">
         <strong>${data.username}</strong> uploaded a file:
         <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>
     `;
