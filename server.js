@@ -4,6 +4,7 @@ const socketIo = require('socket.io');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
+const session = require('express-session');
 
 const app = express();
 const server = http.createServer(app);
@@ -17,6 +18,12 @@ const PASSWORD = "UqVhF6pP{[o,EP2Me2[4SZ{+a=meu!^[;iKaDH=~~TPtsvOiW(";
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -37,12 +44,17 @@ const sanitize = (str) => {
 };
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/password.html');
+    if (req.session.loggedIn) {
+        res.sendFile(__dirname + '/public/index.html');
+    } else {
+        res.sendFile(__dirname + '/public/password.html');
+    }
 });
 
 app.post('/login', (req, res) => {
     const { password } = req.body;
     if (password === PASSWORD) {
+        req.session.loggedIn = true;
         res.sendFile(__dirname + '/public/index.html');
     } else {
         res.sendFile(__dirname + '/public/password.html');
