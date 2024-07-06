@@ -69,7 +69,7 @@ socket.on('load messages', (messages) => {
         messageElement.id = `message-${data.id}`;
         messageElement.innerHTML = `
             <img src="${data.avatar || 'default-avatar.png'}" alt="avatar" class="avatar">
-            <strong>${data.username}</strong>: ${marked(data.message)}
+            <strong>${data.username}</strong>: ${data.message}
             <span class="message-timestamp">${data.timestamp}</span>
         `;
         messageContainer.appendChild(messageElement);
@@ -82,7 +82,7 @@ socket.on('chat message', (data) => {
     messageElement.id = `message-${data.id}`;
     messageElement.innerHTML = `
         <img src="${data.avatar || 'default-avatar.png'}" alt="avatar" class="avatar">
-        <strong>${data.username}</strong>: ${marked(data.message)}
+        <strong>${data.username}</strong>: ${data.message}
         <span class="message-timestamp">${data.timestamp}</span>
     `;
     messages.appendChild(messageElement);
