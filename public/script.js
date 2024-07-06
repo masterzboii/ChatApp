@@ -107,4 +107,16 @@ socket.on('delete message', (messageId) => {
 
 socket.on('file upload', (data) => {
     const messages = document.getElementById('messages');
-    const fileElement = document.createElement('div
+    const fileElement = document.createElement('div');
+    fileElement.innerHTML = `
+        <img src="pfp.png" alt="avatar" class="avatar">
+        <strong>${data.username}</strong> uploaded a file:
+        <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>
+    `;
+    messages.appendChild(fileElement);
+});
+
+socket.on('user list', (users) => {
+    const onlineUsers = document.getElementById('online-users');
+    onlineUsers.innerHTML = `<strong>Online Users:</strong> ${users.join(', ')}`;
+});
