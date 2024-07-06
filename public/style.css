@@ -7,6 +7,25 @@ body {
     margin: 0;
     background: linear-gradient(135deg, #ff0099, #493240);
     color: #fff;
+    position: relative;
+}
+
+#secured-by {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+#secured-by i {
+    margin-right: 5px;
+    color: #00ff00; /* Security checkmark color */
 }
 
 #chat-container {
@@ -84,4 +103,5 @@ body {
 .message-timestamp {
     font-size: 0.8em;
     color: #ccc;
+    display: block;
 }
