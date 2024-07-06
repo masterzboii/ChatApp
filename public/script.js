@@ -1,5 +1,17 @@
 const socket = io();
 
+document.getElementById('login-button').addEventListener('click', () => {
+    const passwordInput = document.getElementById('password-input').value;
+    if (passwordInput === "UqVhF6pP{[o,EP2Me2[4SZ{+a=meu!^[;iKaDH=~~TPtsvOiW(") {
+        document.getElementById('login-container').style.display = 'none';
+        document.getElementById('chat-container').style.display = 'block';
+        const username = prompt("Enter your username");
+        socket.emit('new user', { username });
+    } else {
+        alert('Incorrect password');
+    }
+});
+
 document.getElementById('send-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const messageInput = document.getElementById('message-input');

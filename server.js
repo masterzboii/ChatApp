@@ -47,22 +47,31 @@ const addMessage = (message) => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+
     socket.on('disconnect', () => {
         users.delete(socket.username);
         io.emit('user list', Array.from(users));
         console.log('user disconnected');
     });
+
     socket.on('new user', (data) => {
-        socket.username = data.username;
-        users.add(socket.username);
-        io.emit('user list', Array.from(users));
-        socket.emit('load messages', messages);
+        if (data.password !== "UqVhF6pP{[o,EP2Me2[4SZ{+a=meu!^[;iKaDH=~~TPtsvOiW(") {
+            socket.emit('unauthorized');
+            socket.disconnect();
+        } else {
+            socket.username = data.username;
+            users.add(socket.username);
+            io.emit('user list', Array.from(users));
+            socket.emit('load messages', messages);
+        }
     });
+
     socket.on('chat message', (data) => {
         const message = { ...data, id: Date.now(), timestamp: new Date().toLocaleTimeString() };
         addMessage(message);
         io.emit('chat message', message);
     });
+
     socket.on('file upload', (data) => {
         io.emit('file upload', data);
     });
