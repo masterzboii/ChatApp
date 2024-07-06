@@ -11,9 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "basic-auth": "^2.0.1",
     "express": "^4.19.2",
-    "express-rate-limit": "^7.3.1",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "helmet": "^6.0.0",
+    "express-rate-limit": "^6.7.0",
+    "body-parser": "^1.20.2"
   }
 }
