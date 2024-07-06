@@ -134,7 +134,8 @@ header h1 {
 }
 
 #send-button,
-#upload-button {
+#upload-button,
+#mute-button {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
@@ -143,6 +144,7 @@ header h1 {
     cursor: pointer;
     transition: background 0.3s ease;
     font-size: 16px;
+    margin-bottom: 10px;
 }
 
 #upload-button {
@@ -156,12 +158,14 @@ header h1 {
 }
 
 #send-button:hover,
-#upload-button:hover {
+#upload-button:hover,
+#mute-button:hover {
     background: #e60082;
 }
 
 #send-button:active,
-#upload-button:active {
+#upload-button:active,
+#mute-button:active {
     background: #cc0066;
 }
 

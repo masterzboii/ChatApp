@@ -1,5 +1,7 @@
 const socket = io();
 
+let notificationsMuted = false;
+
 // Request Notification permission
 if (Notification.permission !== "granted") {
     Notification.requestPermission();
@@ -35,6 +37,16 @@ document.getElementById('file-input').addEventListener('change', () => {
             socket.emit('file upload', { username, fileName: file.name, fileContent });
         };
         reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('mute-button').addEventListener('click', () => {
+    notificationsMuted = !notificationsMuted;
+    const muteButton = document.getElementById('mute-button');
+    if (notificationsMuted) {
+        muteButton.innerHTML = '<i class="fas fa-bell"></i> Unmute Notifications';
+    } else {
+        muteButton.innerHTML = '<i class="fas fa-bell-slash"></i> Mute Notifications';
     }
 });
 
@@ -74,14 +86,16 @@ socket.on('chat message', (data) => {
     `;
     messages.appendChild(messageElement);
 
-    if (Notification.permission === "granted") {
+    if (!notificationsMuted && Notification.permission === "granted") {
         new Notification(`${data.username}`, {
             body: data.message,
-            icon: 'pfp.png' // Use pfp.png as notification icon
+            icon: 'pfp.png'
         });
     }
 
-    notificationSound.play();
+    if (!notificationsMuted) {
+        notificationSound.play();
+    }
 });
 
 socket.on('delete message', (messageId) => {
@@ -93,16 +107,4 @@ socket.on('delete message', (messageId) => {
 
 socket.on('file upload', (data) => {
     const messages = document.getElementById('messages');
-    const fileElement = document.createElement('div');
-    fileElement.innerHTML = `
-        <img src="pfp.png" alt="avatar" class="avatar">
-        <strong>${data.username}</strong> uploaded a file:
-        <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>
-    `;
-    messages.appendChild(fileElement);
-});
-
-socket.on('user list', (users) => {
-    const onlineUsers = document.getElementById('online-users');
-    onlineUsers.innerHTML = `<strong>Online Users:</strong> ${users.join(', ')}`;
-});
+    const fileElement = document.createElement('div
