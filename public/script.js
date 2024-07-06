@@ -24,8 +24,19 @@ document.getElementById('send-button').addEventListener('click', () => {
     const username = document.getElementById('username').value;
     const messageInput = document.getElementById('message-input').value;
     const avatarInput = document.getElementById('avatar-input');
-    const avatar = avatarInput.files[0] ? URL.createObjectURL(avatarInput.files[0]) : null;
-    socket.emit('chat message', { username, message: messageInput, avatar });
+    
+    // Process avatar image if uploaded
+    if (avatarInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const avatar = reader.result;
+            socket.emit('chat message', { username, message: messageInput, avatar });
+        };
+        reader.readAsDataURL(avatarInput.files[0]);
+    } else {
+        socket.emit('chat message', { username, message: messageInput, avatar: null });
+    }
+    
     document.getElementById('message-input').value = '';
 });
 
