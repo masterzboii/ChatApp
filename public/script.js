@@ -9,6 +9,10 @@ document.getElementById('send-button').addEventListener('click', () => {
 });
 
 document.getElementById('upload-button').addEventListener('click', () => {
+    document.getElementById('file-input').click();
+});
+
+document.getElementById('file-input').addEventListener('change', () => {
     const username = document.getElementById('username').value;
     const fileInput = document.getElementById('file-input');
     const file = fileInput.files[0];

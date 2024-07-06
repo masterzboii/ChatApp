@@ -53,6 +53,16 @@ body {
     font-size: 16px;
 }
 
+#upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#upload-button i {
+    margin-right: 10px;
+}
+
 #send-button:hover,
 #upload-button:hover {
     background: #e60082;
