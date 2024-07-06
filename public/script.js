@@ -29,13 +29,20 @@ document.getElementById('file-input').addEventListener('change', () => {
 socket.on('chat message', (data) => {
     const messages = document.getElementById('messages');
     const messageElement = document.createElement('div');
-    messageElement.textContent = `${data.username}: ${data.message}`;
+    messageElement.innerHTML = `<strong>${data.username}</strong>: ${data.message} <span class="message-timestamp">${data.timestamp}</span>`;
     messages.appendChild(messageElement);
 });
 
 socket.on('file upload', (data) => {
     const messages = document.getElementById('messages');
     const fileElement = document.createElement('div');
-    fileElement.innerHTML = `${data.username} uploaded a file: <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>`;
+    fileElement.innerHTML = `<strong>${data.username}</strong> uploaded a file: <a href="${data.fileContent}" download="${data.fileName}">${data.fileName}</a>`;
     messages.appendChild(fileElement);
 });
+
+socket.on('user list', (users) => {
+    const onlineUsers = document.getElementById('online-users');
+    onlineUsers.innerHTML = `<strong>Online Users:</strong> ${users.join(', ')}`;
+});
+
+socket.emit('new user', { username: prompt("Enter your username") });

@@ -18,6 +18,14 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+#online-users {
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
 #messages {
     height: 400px;
     overflow-y: auto;
@@ -71,4 +79,9 @@ body {
 #send-button:active,
 #upload-button:active {
     background: #cc0066;
+}
+
+.message-timestamp {
+    font-size: 0.8em;
+    color: #ccc;
 }
