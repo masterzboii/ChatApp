@@ -18,10 +18,7 @@ const users = new Set();
 const PASSWORD = "UqVhF6pP{[o,EP2Me2[4SZ{+a=meu!^[;iKaDH=~~TPtsvOiW(";
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/chatapp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect('mongodb://localhost:27017/chatapp');
 
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
