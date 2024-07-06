@@ -6,7 +6,8 @@ document.getElementById('login-button').addEventListener('click', () => {
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('chat-container').style.display = 'block';
         const username = prompt("Enter your username");
-        socket.emit('new user', { username });
+        document.getElementById('username').value = username;
+        socket.emit('new user', { username, password: passwordInput });
     } else {
         alert('Incorrect password');
     }
@@ -75,5 +76,3 @@ socket.on('user list', (users) => {
     const onlineUsers = document.getElementById('online-users');
     onlineUsers.innerHTML = `<strong>Online Users:</strong> ${users.join(', ')}`;
 });
-
-socket.emit('new user', { username: prompt("Enter your username") });
